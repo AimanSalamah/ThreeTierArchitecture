@@ -13,5 +13,6 @@ namespace Shared.Db
         public string Address { get; set; }
         public DateTime CreateDate { get; set; }
         public string UserID { get; set; }
+        public virtual Users User { get; set; }
     }
 }
