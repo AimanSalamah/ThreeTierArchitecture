@@ -91,17 +91,23 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent(Student student)
         {
-            _context.Student.Add(new Shared.Db.Student
+            try
             {
-                ID = Guid.NewGuid(),
-                Code = new Random().Next(5000).ToString(),
-                No = new Random().Next(999),
-                CreateDate = DateTime.Now,
-                Name = student.Name,
-                Address = student.Address,
-                UserID = "user id from auth"
-            });
-            await _context.SaveChangesAsync();
+                _context.Student.Add(new Shared.Db.Student
+                {
+                    ID = Guid.NewGuid(),
+                    Code = new Random().Next(5000).ToString(),
+                    No = new Random().Next(999),
+                    CreateDate = DateTime.Now,
+                    Name = student.Name,
+                    Address = student.Address
+                });
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
             return CreatedAtAction("GetStudent", new { code = student.Code }, student);
         }
